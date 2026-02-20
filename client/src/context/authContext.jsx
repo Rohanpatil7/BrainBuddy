@@ -4,6 +4,10 @@ const AuthContext = createContext();
 
 export const useAuth = () => useContext(AuthContext);
 
+const API_BASE_URL = import.meta.env.VITE_API_URL || '';
+
+const getApiUrl = (path) => `${API_BASE_URL}${path}`;
+
 const getAuthHeaders = (token) => ({
   'Content-Type': 'application/json',
   Authorization: `Bearer ${token}`,
@@ -31,13 +35,19 @@ export const AuthProvider = ({ children }) => {
           return;
         }
 
-        const res = await fetch('/api/auth/me', {
+        const res = await fetch(getApiUrl('/api/auth/me'), {
           headers: getAuthHeaders(parsedUser.token),
         });
 
         if (!res.ok) {
-          localStorage.removeItem('user');
-          setUser(null);
+          // Only clear saved auth when the token is actually invalid.
+          // For temporary backend/network issues, keep the local session.
+          if (res.status === 401 || res.status === 403) {
+            localStorage.removeItem('user');
+            setUser(null);
+          } else {
+            setUser(parsedUser);
+          }
           setLoading(false);
           return;
         }
@@ -51,8 +61,8 @@ export const AuthProvider = ({ children }) => {
         localStorage.setItem('user', JSON.stringify(normalizedUser));
         setUser(normalizedUser);
       } catch {
-        localStorage.removeItem('user');
-        setUser(null);
+        // Keep existing local session if connectivity check fails.
+        setUser(JSON.parse(storedUser));
       } finally {
         setLoading(false);
       }
@@ -63,7 +73,7 @@ export const AuthProvider = ({ children }) => {
 
   const register = async (userData) => {
     try {
-      const res = await fetch('/api/auth/register', {
+      const res = await fetch(getApiUrl('/api/auth/register'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(userData),
@@ -82,7 +92,7 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (email, password) => {
     try {
-      const res = await fetch('/api/auth/login', {
+      const res = await fetch(getApiUrl('/api/auth/login'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password }),
