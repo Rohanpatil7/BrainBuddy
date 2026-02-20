@@ -1,25 +1,66 @@
 import { createContext, useState, useContext, useEffect } from 'react';
 
-// 1. Create the Context right here
 const AuthContext = createContext();
 
-// 2. Custom hook to use the Auth Context easily in any component
 export const useAuth = () => useContext(AuthContext);
+
+const getAuthHeaders = (token) => ({
+  'Content-Type': 'application/json',
+  Authorization: `Bearer ${token}`,
+});
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  // Check if user is already logged in when the app loads
   useEffect(() => {
-    const storedUser = localStorage.getItem('user');
-    if (storedUser) {
-      setUser(JSON.parse(storedUser));
-    }
-    setLoading(false);
+    const hydrateUser = async () => {
+      const storedUser = localStorage.getItem('user');
+
+      if (!storedUser) {
+        setLoading(false);
+        return;
+      }
+
+      try {
+        const parsedUser = JSON.parse(storedUser);
+
+        if (!parsedUser?.token) {
+          localStorage.removeItem('user');
+          setLoading(false);
+          return;
+        }
+
+        const res = await fetch('/api/auth/me', {
+          headers: getAuthHeaders(parsedUser.token),
+        });
+
+        if (!res.ok) {
+          localStorage.removeItem('user');
+          setUser(null);
+          setLoading(false);
+          return;
+        }
+
+        const profile = await res.json();
+        const normalizedUser = {
+          ...profile,
+          token: parsedUser.token,
+        };
+
+        localStorage.setItem('user', JSON.stringify(normalizedUser));
+        setUser(normalizedUser);
+      } catch {
+        localStorage.removeItem('user');
+        setUser(null);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    hydrateUser();
   }, []);
 
-  // Register Function
   const register = async (userData) => {
     try {
       const res = await fetch('/api/auth/register', {
@@ -27,11 +68,10 @@ export const AuthProvider = ({ children }) => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(userData),
       });
-      
+
       const data = await res.json();
       if (!res.ok) throw new Error(data.message || 'Registration failed');
 
-      // Save user & token to local storage
       localStorage.setItem('user', JSON.stringify(data));
       setUser(data);
       return { success: true };
@@ -40,7 +80,6 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  // Login Function
   const login = async (email, password) => {
     try {
       const res = await fetch('/api/auth/login', {
@@ -48,11 +87,10 @@ export const AuthProvider = ({ children }) => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password }),
       });
-      
+
       const data = await res.json();
       if (!res.ok) throw new Error(data.message || 'Login failed');
 
-      // Save user & token to local storage
       localStorage.setItem('user', JSON.stringify(data));
       setUser(data);
       return { success: true };
@@ -61,7 +99,6 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  // Logout Function
   const logout = () => {
     localStorage.removeItem('user');
     setUser(null);

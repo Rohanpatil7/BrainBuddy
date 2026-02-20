@@ -1,7 +1,11 @@
 import Navbar from "../components/Navbar";
 import { Link } from "react-router-dom";
+import { useAuth } from "../context/authContext";
 
 const Dashboard = () => {
+  const { user } = useAuth();
+  const firstName = user?.name?.split(" ")[0] || "Learner";
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-emerald-50 relative overflow-hidden pb-10">
       {/* Decorative Blobs */}
@@ -16,7 +20,7 @@ const Dashboard = () => {
         
         {/* Welcome Header */}
         <header>
-          <h2 className="text-3xl font-extrabold text-slate-800">Welcome Back, Rohan! 👋</h2>
+          <h2 className="text-3xl font-extrabold text-slate-800">Welcome Back, {firstName}! 👋</h2>
           <p className="text-slate-500 font-medium mt-1 text-lg">Ready to learn something new today?</p>
         </header>
 

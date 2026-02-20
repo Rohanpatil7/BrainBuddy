@@ -87,3 +87,10 @@ export const loginUser = async (req, res, next) => {
     next(error);
   }
 };
+
+// @desc    Get current logged in user
+// @route   GET /api/auth/me
+// @access  Private
+export const getMe = async (req, res) => {
+  res.json(req.user);
+};
