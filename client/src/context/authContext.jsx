@@ -31,13 +31,20 @@ export const AuthProvider = ({ children }) => {
           return;
         }
 
+        setUser(parsedUser);
+
         const res = await fetch('/api/auth/me', {
           headers: getAuthHeaders(parsedUser.token),
         });
 
-        if (!res.ok) {
+        if (res.status === 401 || res.status === 403) {
           localStorage.removeItem('user');
           setUser(null);
+          setLoading(false);
+          return;
+        }
+
+        if (!res.ok) {
           setLoading(false);
           return;
         }
@@ -51,7 +58,6 @@ export const AuthProvider = ({ children }) => {
         localStorage.setItem('user', JSON.stringify(normalizedUser));
         setUser(normalizedUser);
       } catch {
-        localStorage.removeItem('user');
         setUser(null);
       } finally {
         setLoading(false);
