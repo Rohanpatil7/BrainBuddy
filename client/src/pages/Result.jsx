@@ -3,56 +3,87 @@ import { Link } from "react-router-dom";
 
 const Result = () => {
   return (
-    <div className="min-h-screen bg-slate-50 pb-20">
-      <Navbar />
-      
-      <div className="p-4 sm:p-10 max-w-4xl mx-auto mt-6 space-y-8">
-        
-        {/* Header Area */}
-        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-          <div>
-            <span className="bg-sky-100 text-sky-700 text-sm font-bold px-4 py-1 rounded-full uppercase">Science • Class 6</span>
-            <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-800 mt-4">Photosynthesis 🌱</h2>
-          </div>
-          <Link to="/generate" className="text-violet-600 font-bold hover:underline bg-violet-50 px-4 py-2 rounded-full">
-            ← Back to Search
-          </Link>
-        </div>
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-emerald-50 relative overflow-hidden pb-12">
+      {/* Decorative Blobs */}
+      <div className="absolute top-20 -left-10 w-64 h-64 bg-blue-200 rounded-full mix-blend-multiply filter blur-3xl opacity-40"></div>
+      <div className="absolute bottom-20 -right-10 w-64 h-64 bg-emerald-200 rounded-full mix-blend-multiply filter blur-3xl opacity-40"></div>
 
-        {/* AI Summary Section */}
-        <div className="bg-white p-6 sm:p-10 rounded-[2rem] shadow-sm border-2 border-slate-100">
-          <h3 className="text-2xl font-bold text-slate-800 mb-4 border-b-2 border-slate-100 pb-4">📝 Simple Summary</h3>
-          <div className="prose prose-lg prose-slate text-slate-600 font-medium">
-            <p>Imagine if you could make your own food just by standing in the sun! That's exactly what plants do. Photosynthesis is the magic process where plants use sunlight, water, and air to cook up their own sugary food.</p>
-            <div className="bg-amber-50 border-l-4 border-amber-400 p-4 my-6 rounded-r-xl">
-              <strong className="text-amber-800 block mb-1">🌍 Real-Life Example:</strong>
-              <span className="text-amber-700">Think of a plant's leaves as tiny solar panels mixed with a kitchen. They catch the sun's energy to bake their "meals"!</span>
-            </div>
-          </div>
-        </div>
-
-        {/* Quiz Section */}
-        <div className="bg-white p-6 sm:p-10 rounded-[2rem] shadow-sm border-2 border-slate-100">
-          <h3 className="text-2xl font-bold text-slate-800 mb-6 border-b-2 border-slate-100 pb-4">🎯 Quick Quiz</h3>
-          
-          {/* Example Quiz Question */}
-          <div className="bg-slate-50 p-6 rounded-2xl border border-slate-200">
-            <p className="font-bold text-lg text-slate-800 mb-4">1. What do plants use to make their food?</p>
-            <div className="space-y-3">
-              <label className="flex items-center p-4 bg-white border-2 border-slate-200 rounded-xl cursor-pointer hover:border-violet-400 hover:bg-violet-50 transition-colors">
-                <input type="radio" name="q1" className="w-5 h-5 text-violet-600" />
-                <span className="ml-3 font-medium text-slate-700">Burgers and Fries</span>
-              </label>
-              <label className="flex items-center p-4 bg-white border-2 border-slate-200 rounded-xl cursor-pointer hover:border-violet-400 hover:bg-violet-50 transition-colors">
-                <input type="radio" name="q1" className="w-5 h-5 text-violet-600" />
-                <span className="ml-3 font-medium text-slate-700">Sunlight, Water, and Air</span>
-              </label>
-            </div>
-          </div>
-          
-        </div>
-
+      <div className="relative z-50">
+        <Navbar />
       </div>
+
+      <main className="relative z-10 max-w-md mx-auto p-6 mt-4 space-y-6">
+        
+        {/* Encouraging Header */}
+        <div className="text-center mb-2">
+          <h2 className="text-3xl font-extrabold text-slate-800">You're a Star! 🌟</h2>
+          <p className="text-slate-500 font-medium mt-2">Here is your magical study guide.</p>
+        </div>
+
+        {/* 1. Summary Card */}
+        <div className="bg-white/80 backdrop-blur-xl p-6 rounded-3xl shadow-sm border border-white">
+          <div className="flex items-center gap-3 mb-4">
+            <div className="w-10 h-10 bg-blue-100 text-blue-600 rounded-xl flex items-center justify-center text-xl">
+              📖
+            </div>
+            <h3 className="text-xl font-bold text-slate-800">Quick Summary</h3>
+          </div>
+          <div className="text-slate-600 font-medium leading-relaxed space-y-3 text-sm md:text-base">
+            <p>
+              Photosynthesis is how plants make their own food! They act like little factories.
+            </p>
+            <p>
+              They use <strong>sunlight</strong>, <strong>water</strong> from the soil, and <strong>carbon dioxide</strong> from the air to create sugar and release the oxygen we breathe.
+            </p>
+          </div>
+        </div>
+
+        {/* 2. Quiz Card */}
+        <div className="bg-white/80 backdrop-blur-xl p-6 rounded-3xl shadow-sm border border-white">
+          <div className="flex items-center gap-3 mb-5">
+            <div className="w-10 h-10 bg-emerald-100 text-emerald-600 rounded-xl flex items-center justify-center text-xl">
+              🧠
+            </div>
+            <h3 className="text-xl font-bold text-slate-800">Mini Quiz</h3>
+          </div>
+
+          {/* Mock Question */}
+          <div className="space-y-4">
+            <p className="font-bold text-slate-700 text-lg">1. What gas do plants release into the air?</p>
+            
+            {/* Answer Options - Large Tap Targets for Mobile */}
+            <div className="space-y-3">
+              <label className="flex items-center gap-3 p-4 border border-slate-200 bg-white rounded-2xl cursor-pointer hover:bg-slate-50 transition-colors">
+                <input type="radio" name="q1" className="w-5 h-5 text-blue-600 focus:ring-blue-500" />
+                <span className="font-medium text-slate-700">Carbon Dioxide</span>
+              </label>
+              
+              {/* Example of a "Selected" state */}
+              <label className="flex items-center gap-3 p-4 border-2 border-blue-500 bg-blue-50 rounded-2xl cursor-pointer transition-colors">
+                <input type="radio" name="q1" className="w-5 h-5 text-blue-600 focus:ring-blue-500" defaultChecked />
+                <span className="font-bold text-blue-800">Oxygen</span>
+              </label>
+
+              <label className="flex items-center gap-3 p-4 border border-slate-200 bg-white rounded-2xl cursor-pointer hover:bg-slate-50 transition-colors">
+                <input type="radio" name="q1" className="w-5 h-5 text-blue-600 focus:ring-blue-500" />
+                <span className="font-medium text-slate-700">Nitrogen</span>
+              </label>
+            </div>
+          </div>
+
+          <button className="w-full bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-4 rounded-2xl shadow-md shadow-emerald-200 mt-6 transition-transform active:scale-95">
+            Check Answer
+          </button>
+        </div>
+
+        {/* Back Navigation */}
+        <Link to="/dashboard" className="block mt-6">
+          <button className="w-full bg-slate-800 hover:bg-slate-900 text-white font-bold py-4 rounded-2xl shadow-lg transition-transform active:scale-95">
+            Back to Dashboard
+          </button>
+        </Link>
+        
+      </main>
     </div>
   );
 };

@@ -3,44 +3,67 @@ import { Link } from "react-router-dom";
 
 const Dashboard = () => {
   return (
-    <div className="min-h-screen bg-slate-50">
-      <Navbar />
-      
-      <div className="p-4 sm:p-10 max-w-6xl mx-auto mt-6">
-        {/* Welcome Banner */}
-        <div className="bg-gradient-to-r from-violet-500 to-fuchsia-500 rounded-[2rem] p-6 sm:p-10 text-white shadow-lg flex flex-col md:flex-row items-center justify-between gap-6 mb-10">
-          <div>
-            <h2 className="text-3xl sm:text-4xl font-extrabold mb-2">Welcome Back, Rohan! 🎒</h2>
-            <p className="text-violet-100 font-medium text-lg">You have 5 free topics left this month.</p>
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-emerald-50 relative overflow-hidden pb-10">
+      {/* Decorative Blobs */}
+      <div className="absolute top-10 -left-10 w-48 h-48 bg-blue-200 rounded-full mix-blend-multiply filter blur-3xl opacity-50"></div>
+      <div className="absolute bottom-20 -right-10 w-64 h-64 bg-emerald-200 rounded-full mix-blend-multiply filter blur-3xl opacity-40"></div>
+
+      <div className="relative z-50">
+        <Navbar />
+      </div>
+
+      <main className="relative z-10 max-w-md mx-auto p-6 mt-4 space-y-6">
+        
+        {/* Welcome Header */}
+        <header>
+          <h2 className="text-3xl font-extrabold text-slate-800">Welcome Back, Rohan! 👋</h2>
+          <p className="text-slate-500 font-medium mt-1 text-lg">Ready to learn something new today?</p>
+        </header>
+
+        {/* Action Card (Glassmorphism) */}
+        <div className="bg-white/70 backdrop-blur-xl p-6 rounded-3xl shadow-xl shadow-slate-200/50 border border-white">
+          <div className="w-14 h-14 bg-emerald-100 text-emerald-600 rounded-2xl flex items-center justify-center text-3xl mb-4 shadow-sm">
+            🚀
           </div>
-          <Link to="/generate">
-            <button className="bg-yellow-400 hover:bg-yellow-300 text-violet-900 font-bold text-lg px-8 py-4 rounded-full shadow-lg transition-transform hover:scale-105 whitespace-nowrap">
-              + New Topic
+          <h3 className="text-xl font-bold text-slate-800">Generate New Topic</h3>
+          <p className="text-slate-500 mt-2 mb-6 font-medium leading-relaxed">
+            Pick a subject and let AI create a magic summary and quiz just for you.
+          </p>
+          <Link to="/generate" className="block">
+            <button className="w-full bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-4 rounded-2xl shadow-lg shadow-emerald-200 transition-transform active:scale-95 text-lg">
+              Start Learning
             </button>
           </Link>
         </div>
 
-        {/* Dashboard Content Grid */}
-        <h3 className="text-2xl font-bold text-slate-800 mb-6 pl-2">Your Recent Studies 📖</h3>
-        
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {/* Placeholder Card 1 */}
-          <div className="bg-white border-2 border-slate-100 p-6 rounded-3xl shadow-sm hover:shadow-md transition-shadow">
-            <span className="bg-sky-100 text-sky-700 text-xs font-bold px-3 py-1 rounded-full uppercase">Science</span>
-            <h4 className="text-xl font-bold text-slate-800 mt-4 mb-2">Photosynthesis</h4>
-            <p className="text-slate-500 font-medium text-sm mb-4">Learned how plants make food using sunlight.</p>
-            <button className="text-violet-600 font-bold hover:underline text-sm">Review Notes →</button>
+        {/* Recent Activity Section */}
+        <section className="space-y-4">
+          <h4 className="text-sm font-bold text-slate-400 uppercase tracking-wider pl-2">Recent Topics</h4>
+          
+          {/* Recent Item Card */}
+          <div className="bg-white/60 backdrop-blur-md rounded-2xl p-5 shadow-sm border border-white flex justify-between items-center hover:bg-white/80 transition-colors cursor-pointer">
+             <div>
+               <h5 className="font-bold text-slate-700 text-lg">Fractions & Decimals</h5>
+               <p className="text-sm text-slate-500 font-medium">Class 6 • Math</p>
+             </div>
+             <span className="text-blue-600 font-bold bg-blue-100 px-4 py-2 rounded-xl text-sm shadow-sm">
+               Review
+             </span>
           </div>
 
-          {/* Placeholder Card 2 */}
-          <div className="bg-white border-2 border-slate-100 p-6 rounded-3xl shadow-sm hover:shadow-md transition-shadow">
-            <span className="bg-orange-100 text-orange-700 text-xs font-bold px-3 py-1 rounded-full uppercase">Math</span>
-            <h4 className="text-xl font-bold text-slate-800 mt-4 mb-2">Fractions</h4>
-            <p className="text-slate-500 font-medium text-sm mb-4">Understanding numerators and denominators.</p>
-            <button className="text-violet-600 font-bold hover:underline text-sm">Review Notes →</button>
+          {/* Another Recent Item */}
+          <div className="bg-white/60 backdrop-blur-md rounded-2xl p-5 shadow-sm border border-white flex justify-between items-center hover:bg-white/80 transition-colors cursor-pointer">
+             <div>
+               <h5 className="font-bold text-slate-700 text-lg">Photosynthesis</h5>
+               <p className="text-sm text-slate-500 font-medium">Class 6 • Science</p>
+             </div>
+             <span className="text-blue-600 font-bold bg-blue-100 px-4 py-2 rounded-xl text-sm shadow-sm">
+               Review
+             </span>
           </div>
-        </div>
-      </div>
+        </section>
+
+      </main>
     </div>
   );
 };
